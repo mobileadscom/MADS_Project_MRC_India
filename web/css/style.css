@@ -1,0 +1,226 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+#rma-widget {
+    width: 320px;
+    height: 480px;
+    margin: 0;
+    padding: 0;
+}
+
+#raffle_content {
+    margin: 0;
+    padding: 0;
+    width: 320px;
+    height: 480px;
+    position: relative;
+    color: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#tac * {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none;   /* Chrome/Safari/Opera */
+  -khtml-user-select: none;    /* Konqueror */
+  -moz-user-select: none;      /* Firefox */
+  -ms-user-select: none;       /* Internet Explorer/Edge */
+}
+
+.abs {
+    position: absolute;
+}
+
+.hide {
+    display: none;
+}
+
+#up {
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    right: -6px;
+    bottom: 35px;
+}
+
+#down {
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    right: -6px;
+    bottom: -14px;
+}
+
+#tac {
+    left: 20px;
+    top: 0;
+    width: 80%;
+    height: 480px;
+    text-align: left;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    overflow: -moz-scrollbars-none;
+}
+
+::-webkit-scrollbar { 
+    width: 0 !important;
+    display: none; 
+}
+
+#scroll {
+    bottom: 25px;
+    right: 6px;
+}
+
+#close_tc {
+    right: 7px;
+    top: 330px;
+}
+
+#raffle_content div.inner {
+    padding: 30px 15px;
+}
+
+#contest_tc {
+    bottom: 5px;
+    text-decoration: underline;
+    font-size: 14px;
+    width: 100%;
+    text-align: center;
+    cursor: pointer;
+    padding: 10px 0;
+}
+
+#mailer input {
+  display: inline-block;
+  padding: 10px 20px;
+  border: 1px solid #b7b7b7;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  font: normal 16px/normal Arial, serif;
+  color: #000;
+}
+
+#mailer {
+    width: 320px;
+    text-align: center;
+    font-family: arial;
+    top: 130px;
+}
+
+#mailer button {
+    font-family: arial;
+    font-weight: bold;
+    color: #FFFFFF !important;
+    font-size: 14px;
+    text-shadow: 1px 1px 1px #0472e9;
+    /* box-shadow: 1px 1px 1px #FFFFFF; */
+    padding: 10px 25px;
+    -moz-border-radius: 25px;
+    -webkit-border-radius: 25px;
+    border-radius: 25px;
+    border: 1px solid #0472e9;
+    background: #63B8EE;
+    background: linear-gradient(top, #67bcfe, #0472e9);
+    background: -ms-linear-gradient(top, #67bcfe, #0472e9);
+    background: -webkit-gradient(linear, left top, left bottom, from(#67bcfe), to(#0472e9));
+    background: -moz-linear-gradient(top, #67bcfe, #0472e9);
+    margin-top: 15px;
+    cursor: pointer;
+}
+
+#thankyou {
+    width: 320px;
+    top: 129px;
+    font-size: 26px;
+    text-align: center;
+}
+
+#next_btn {
+    width: 53px;
+    height: 54px;
+    bottom: 64px;
+    right: 22px;
+    cursor: pointer;
+}
+
+#title {
+    font-size: 20px;
+}
+
+.question {
+    font-size: 17px;
+}
+
+.radio {
+    margin-top: 5px;
+}
+
+.radio label {
+    width: 90%;
+    display: inline-block;
+    cursor: pointer;
+    text-align: left;
+}
+
+.radio input[type=radio] {
+    margin-left: 0;
+    margin-bottom: 9px;
+    margin-top: 9px;
+}
+.radio input[type=radio]:last-child {
+    margin-bottom: 3px;
+}
+
+/* The snackbar - position it at the bottom and in the middle of the screen */
+#snackbar {
+    visibility: hidden;
+    min-width: 250px;
+    background-color: rgba(51, 51, 51, 0.95);
+    color: #fff;
+    text-align: center;
+    border-radius: 2px;
+    padding: 16px;
+    z-index: 1;
+    margin: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    height: 30px;
+    width: 70%;
+    line-height: 30px;
+}
+
+/* Show the snackbar when clicking on a button (class added with JavaScript) */
+#snackbar.show {
+    visibility: visible !important; /* Show the snackbar */
+
+/* Add animation: Take 0.5 seconds to fade in and out the snackbar. 
+However, delay the fade out process for 2.5 seconds */
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+/* Animations to fade the snackbar in and out */
+@-webkit-keyframes fadein {
+    from {bottom: 0; opacity: 0;} 
+    to {bottom: 30px; opacity: 1;}
+}
+
+@keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 30px; opacity: 1;}
+}
+
+@-webkit-keyframes fadeout {
+    from {bottom: 30px; opacity: 1;} 
+    to {bottom: 0; opacity: 0;}
+}
+
+@keyframes fadeout {
+    from {bottom: 30px; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
+}
+
