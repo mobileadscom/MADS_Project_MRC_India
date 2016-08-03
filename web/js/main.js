@@ -1,12 +1,12 @@
 /*
-*
-* mads - version 2.00.01
-* Copyright (c) 2015, Ninjoe
-* Dual licensed under the MIT or GPL Version 2 licenses.
-* https://en.wikipedia.org/wiki/MIT_License
-* https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html
-*
-*/
+ *
+ * mads - version 2.00.01
+ * Copyright (c) 2015, Ninjoe
+ * Dual licensed under the MIT or GPL Version 2 licenses.
+ * https://en.wikipedia.org/wiki/MIT_License
+ * https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html
+ *
+ */
 var mads = function () {
     /* Get Tracker */
     if (typeof custTracker == 'undefined' && typeof rma != 'undefined') {
@@ -112,13 +112,16 @@ mads.prototype.linkOpener = function (url) {
 mads.prototype.tracker = function (tt, type, name, value) {
 
     /*
-    * name is used to make sure that particular tracker is tracked for only once
-    * there might have the same type in different location, so it will need the name to differentiate them
-    */
+     * name is used to make sure that particular tracker is tracked for only once
+     * there might have the same type in different location, so it will need the name to differentiate them
+     */
     name = name || type;
 
     if (typeof this.custTracker != 'undefined' && this.custTracker != '' && this.tracked.indexOf(name) == -1) {
         for (var i = 0; i < this.custTracker.length; i++) {
+
+            if (i === 1) continue;
+
             var img = document.createElement('img');
 
             if (typeof value == 'undefined') {
@@ -130,12 +133,12 @@ mads.prototype.tracker = function (tt, type, name, value) {
             src = src.replace('{{rmavalue}}', value);
 
             /* Insert TT's macro */
-            if (this.trackedEngagementType.indexOf(tt) != '-1' || this.engagementTypeExlude.indexOf(tt) != '-1') {
-                src = src.replace('tt={{rmatt}}', '');
-            } else {
-                src = src.replace('{{rmatt}}', tt);
-                this.trackedEngagementType.push(tt);
-            }
+            // if (this.trackedEngagementType.indexOf(tt) != '-1' || this.engagementTypeExlude.indexOf(tt) != '-1') {
+            //     src = src.replace('tt={{rmatt}}', '');
+            // } else {
+            src = src.replace('{{rmatt}}', tt);
+            this.trackedEngagementType.push(tt);
+            // }
 
             /* Append ty for first tracker only */
             if (!this.firstEngagementTracked && tt == 'E') {
@@ -176,118 +179,561 @@ mads.prototype.loadCss = function (href) {
     this.headTag.appendChild(link);
 }
 
-var Ad = function () {
+var getJSON = function (url, callback) {
+    var xhr = new XMLHttpRequest();
+    xhr.open("get", url, true);
+    xhr.responseType = "json";
+    xhr.onload = function () {
+        var status = xhr.status;
+        if (status == 200) {
+            callback(null, xhr.response);
+        } else {
+            callback(status);
+        }
+    };
+    xhr.send();
+}
+
+var API_KEY = 'AIzaSyATXN5KlKRubdH643deD012vBIcZ6V1bRQ';
+
+var renderAd = function (data) {
     var app = new mads();
 
-    var alertSnack = function(text) {
-        var x = app.contentTag.querySelector('#snackbar');
+    var score = 0;
 
-        x.className = 'show';
-
-        x.innerText = text;
-
-        setTimeout(function() {
-            x.className = x.className.replace('show', '');
-        }, 3000);
+    var dy = {
+        'logo': app.path + 'img/logo.png',
+        'title': 'Online <br/>Behavior Shopping',
+        'questions': [
+            {
+                'question': '1. How often?',
+                'answers': ['Answer 1', 'Answer 2'],
+                'type': 'check'
+            },
+            {
+                'question': '2. How often?',
+                'answers': ['Answer 1', 'Answer 2'],
+                'type': 'check'
+            },
+            {
+                'question': '3. How often?',
+                'answers': ['Answer 1', 'Answer 2'],
+                'type': 'radio'
+            }
+        ]
     }
 
-    var tac = '<br/><br/><strong>One Nation Contest Rule</strong><br/><br/>· Contest ends July 28, 2016.<br/><br/>· Limit one entry per individual<br/><br/>· Complete the survey.<br/><br/>· No contribution is necessary.<br/><br/>See full terms & conditions below. NO PURCHASE, PAYMENT, OR FINANCIAL CONTRIBUTION OF ANY \KIND IS NECESSARY TO ENTER OR WIN THIS CONTEST. Making a contribution does not increase your chances or odds of winning.<br/><br/>Entrants agree to be bound by these Rules and by the decisions of the Sponsor, which are final and binding in all respects. To be eligible to win the prize, entries must be completed and received by the Sponsor as specified below. All applicable federal, state, and local laws and regulations apply.<br/><br/>The Promotion begins on July 13, 2016 at 12:00 p.m. Eastern Daylight Time and ends on July 28, 2016 at 11:59pm Eastern Daylight Time (“Entry Period”). All entries must be received by 11:59pm Eastern Daylight Time on Thursday, July 28, 2016.<br/><br/>One (1) winner will receive the following Prize: [Amazon gift card]. Odds of winning depend on the number of entries received. <br/><br/>This Promotion is open to citizens and permanent residents (green card holders) of Ohio who are at least 18 years of age or the age of majority as determined by state law. Prize may not be substituted or exchanged and is not redeemable for cash. All federal, state, and local taxes associated with the receipt or use of any prize awarded are the sole responsibility of the winner. <br/><br/>The winner of this promotion will be notified on or before September 1, 2016. Unless otherwise prohibited by applicable law, submitting an entry in this promotion constitutes the entrant’s permission to use his or her name, hometown, likeness, and/or prize information, without limitation, for promotional purposes without further permission or compensation. As a condition of being awarded any prize, unless otherwise prohibited by applicable law, the contest winner consents to the use of her name, hometown, likeness and/or prize information, without limitation, for promotional purposes without further permission or compensation. As a condition of being awarded a prize, the winner may be required to execute and deliver to Sponsor a signed affidavit of eligibility and acceptance of these Rules and release of liability, and any other legal, regulatory, or tax-related documents as required by the Sponsor.<br/><br/>By entering this promotion, you release the Sponsor and Sponsor’s directors, officers, employees, consultants and other representatives or agents from any liability whatsoever, and waive any and all causes of action related to any claims, costs, injuries, losses, or damages of any kind arising out of or in connection with the promotion or delivery, misdelivery, acceptance, possession, use or inability to use any prize (including, without limitation, claims, costs, injuries, losses, and damages related to personal injuries, death, damage to or destruction of property, rights of publicity or privacy, defamation or portrayal in a false light, whether intentional or unintentional), whether under a theory of contract, tort (including negligence), warranty or other theory. <br/><br/>The Sponsor is One Nation, Inc., 45 North Hill Drive, Suite 100, Warrenton, VA 20186.<br/><br/><br/>';
+    dy = data;
 
-    app.contentTag.innerHTML = '<div id="raffle_content"> <div class="inner"><div id="title">Answer These Questions, Win A $500 Amazon Gift Card</div><br/> <div id="question1"> <div class="question">1. If the election for U.S. Senate were<br/> held today, who would you vote for?</div> <div id="choices1" class="radio"> <input type="radio" name="choice1" value="0" id="ted"> <label for="ted">Ted Strickland</label><br /> <input type="radio" name="choice1" value="1" id="rob"> <label for="rob">Rob Portman</label><br/> <input type="radio" name="choice1" value="2" id="und"> <label for="und">Undecided</label> </div> </div> <br/> <div id="question2"> <div class="question">2. Which ONE of the following issues is most important to you?</div> <div id="choices2" class="radio"> <input type="radio" name="choice2" value="0" id="national"> <label for="national">National Security</label><br /> <input type="radio" name="choice2" value="1" id="social"> <label for="social">Social Security</label><br/> <input type="radio" name="choice2" value="2" id="health"> <label for="health">Health Care</label><br/> <input type="radio" name="choice2" value="3" id="income"> <label for="income">Income Inequality</label> </div> </div></div> <div id="contest_tc" class="abs">Contest Terms & Conditions</div> <img id="next_btn" class="abs" src="' + app.path + 'img/btn_arrow.png"> <div id="tac" class="abs hide">' + tac + ' </div> <div id="scroll" class="abs hide"><img id="scroller" src="' + app.path + 'img/updown.png"><div id="up"></div><div id="down"></div></div> <img src="' + app.path + 'img/xbtn.png" id="close_tc" class="abs hide"> <div class="abs hide" id="mailer"><strong>Enter Your Email</strong><br/><br/><input type="text" placeholder="Email" /><button id="submit">SUBMIT</button></div> <div class="abs hide" id="thankyou"><strong>Thank you for<br/>submitting<br/>your email.</strong></div> <div id="snackbar"></div> </div> ';
+    // dy.questions = [];
 
-    app.contentTag.querySelector('#raffle_content').style.background = 'url(' + app.path + 'img/bg.jpg)';
+    // for (var i = 2; i < values.length; i++) {
+    //     if (!values[i][1] && !values[i][2] && !values[i][3]) {
+    //         continue;
+    //     }
+    //     var no = values[i][0].replace('Question ', '');
+    //     var question = no + '. ' + values[i][1];
+    //     var type = values[i][2];
+    //     var answers = values[i][3];
+    //     answers = answers.split(',');
+    //     dy.questions.push({
+    //         'question': question,
+    //         'answers': answers,
+    //         'type': type
+    //     })
+    // }
 
-    var inner = app.contentTag.querySelector('.inner');
-    var contest = app.contentTag.querySelector('#contest_tc');
-    var next = app.contentTag.querySelector('#next_btn');
-    var tace = app.contentTag.querySelector('#tac');
-    var scroll = app.contentTag.querySelector('#scroll');
-    var x = app.contentTag.querySelector('#close_tc');
-    var mailer = app.contentTag.querySelector('#mailer');
-    var thankyou = app.contentTag.querySelector('#thankyou');
+    var qa = [
+        {
+            'Q': '1. How often do you shop for products online?',
+            'A': ['Not at all often', 'Slightly often', 'Very often', 'All the time'],
+            'T': 'question_1',
+            'long': true,
+            'type': 'R'
+        }, {
+            'Q': '2. What is the most important thing you look for when buying online? (Select all that apply)',
+            'A': ['Discounts', 'Latest Arrivals', 'Delivery Time', 'Premium brands', 'Ease of Buying'],
+            'T': 'question_2',
+            'type': 'C',
+            'long': true
+        }, {
+            'Q': '3. What is your preferred medium for online shopping?',
+            'A': ['Mobile Website', 'Mobile App', 'Desktop Website', 'Tablet'],
+            'T': 'question_3',
+            'long': true,
+            'type': 'R'
+        }, {
+            'Q': '4. What types of products do you typically buy online? (Select all that apply)',
+            'A': ['Clothes & Shoes', 'Electronic appliances', 'Books', 'Furniture', 'Groceries', 'Household items'],
+            'T': 'question_4',
+            'long': true,
+            'type': 'C'
+        }, {
+            'Q': '5. Which online shopping website do you prefer the most?',
+            'A': ['Flipkart', 'Snapdeal', 'Amazon', 'Paytm', 'Myntra', 'Others'],
+            'T': 'question_5',
+            'type': 'R',
+            'long': true,
+            'end': true
+        }]
 
-    app.loadJs(app.path + 'js/zenscroll-min.js', function () {
 
-        var dur = 500;
-        var off = 30;
-        var myscroll = zenscroll.createScroller(tace, dur, off);
+    // if (typeof this.custTracker !== 'undefined' && typeof this.custTracker[1] !== 'undefined') {
+    //     dy = JSON.parse(this.custTracker[1]);
+    //     qa = [];
+    // } else {
+    //     dy = [];
+    // }
 
-        var down = app.contentTag.querySelector('#down');
-        var up = app.contentTag.querySelector('#up');
+    qa = [];
+    // dy = [];
 
-        down.addEventListener('click', function () {
-            myscroll.toY(tace.scrollTop + 200)
-        }, false);
-        up.addEventListener('click', function () {
-            myscroll.toY(tace.scrollTop - 200)
-        }, false);
-    })
+    for (var i in dy.questions) {
+        var q = dy.questions[i].question
+        var a = dy.questions[i].answers
+        var t = dy.questions[i].type === 'check' ? 'C' : 'R'
 
-    app.contentTag.querySelector('#contest_tc').addEventListener('click', function () {
-        inner.className += ' hide';
-        contest.className += ' hide';
-        next.className += ' hide';
-        tace.className = tace.className.replace(' hide', '');
-        scroll.className = scroll.className.replace(' hide', '');
-        x.className = x.className.replace(' hide', '');
-        app.tracker('E', 'termsconditions');
-    }, false);
-
-    app.contentTag.querySelector('#close_tc').addEventListener('click', function () {
-        inner.className = inner.className.replace(' hide', '');
-        contest.className = contest.className.replace(' hide', '')
-        next.className = next.className.replace(' hide', '');
-        tace.className += ' hide';
-        scroll.className += ' hide';
-        x.className += ' hide';
-    }, false);
-
-    var toAlert = [true, true];
-
-    app.contentTag.querySelector('#next_btn').addEventListener('click', function () {
-        if (!app.contentTag.querySelector('input[type=radio][name=choice1]:checked')) {
-            toAlert[0] = true;
-        } else {
-            toAlert[0] = false;
-            var values = ['Ted Strickland', 'Rob Portman', 'Undecided'];
-            app.tracker('E', 'votewho_qn1', 'votewho_qn1', values[app.contentTag.querySelector('input[type=radio][name=choice1]:checked').value]);
+        var po = {
+            'Q': q,
+            'A': a,
+            'T': 'question_' + parseInt(i) + 1,
+            'type': t,
+            'long': true
         }
 
-        if (!app.contentTag.querySelector('input[type=radio][name=choice2]:checked')) {
-            toAlert[1] = true;
-        } else {
-            toAlert[1] = false;
-            var values = ['National Security', 'Social Security', 'Health Care', 'Income Inequality'];
-            app.tracker('E', 'imptissue_qn2', 'imptissue_qn2', values[app.contentTag.querySelector('input[type=radio][name=choice2]:checked').value]);
+        if (dy.questions.length == parseInt(i) + 1) {
+            po.end = true;
         }
 
-        if (toAlert[0] || toAlert[1]) {
-            alertSnack('Please select your answers.')
+        qa.push(po);
+    }
+
+    var logo = dy.logo || app.path + 'img/logo.png';
+    var title = dy.title || 'Online<br/>Shopping Behavior';
+
+    var current = 0,
+        pageq = [],
+        results = [],
+        content = '<div id="logo"><img src="' + logo + '" /></div><div id="heading"><span>' + title + '</span></div>';
+
+    app.contentTag.innerHTML = '<div id="main" class="abs"><div id="header">' + content + '</div><div id="ad-content" class="abs"></div></div></div>';
+
+    var main = document.getElementById('main'),
+        content = document.getElementById('ad-content'),
+        front = document.getElementById('front');
+
+    var end = document.createElement('div');
+    end.className = 'thankyou hide abs';
+    end.innerText = 'Thank you for your response';
+
+    var pager = document.createElement('div');
+    pager.className = 'pager abs';
+    pager.innerText = '1 out of ' + qa.length;
+    content.appendChild(pager);
+
+    var arrows = document.createElement('div');
+    arrows.className = 'arrows hide abs';
+    arrows.innerHTML = '<div id="back" class="left abs">Back</div><a href="http://www.pulseresearch.org/privacy" target="_blank">Privacy Policy</a><div id="next" class="right abs">Next</div>'
+    content.appendChild(arrows);
+
+    var left = document.querySelector('.left');
+    var right = document.querySelector('.right');
+
+    left.style.opacity = 0;
+    right.style.opacity = 0.2;
+
+    left.addEventListener('click', function (e) {
+        if (this.getAttribute('enabled') == 'false') {
+            e.preventDefault();
+            e.stopPropagation();
             return false;
         }
 
-        inner.className += ' hide';
-        contest.className += ' hide';
-        next.className += ' hide';
-        mailer.className = mailer.className.replace(' hide', '');
-    }, false);
-
-
-    app.contentTag.querySelector('#submit').addEventListener('click', function () {
-        var emailFilter = /^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i;
-
-        var email = mailer.querySelector('input').value;
-
-        if (email !== '' && emailFilter.test(email)) {
-            mailer.className += ' hide';
-            thankyou.className = thankyou.className.replace(' hide', '');
-            app.tracker('E', 'emailsubmit', 'emailsubmit', email);
-            app.tracker('E', 'thankyou');
-        } else {
-            alertSnack('Please enter your valid email.')
+        if (current <= 4) {
+            arrows.childNodes[2].setAttribute('enabled', true);
+            arrows.childNodes[2].innerText = 'Next';
+            arrows.childNodes[2].style.right = 0;
         }
+
+        pageq[current].className = 'questionaire hide' + (qa[current].long ? ' long' : '') + (qa[current].end ? ' end' : '');
+        current -= 1;
+        pageq[current].className = 'questionaire' + (qa[current].long ? ' long' : '') + (qa[current].end ? ' end' : '');
+        setTimeout(function () {
+            pageq[current].style.opacity = 1;
+        }, 1)
+
+        if (typeof results[current - 1] !== 'undefined') {
+            arrows.childNodes[0].setAttribute('enabled', true);
+            arrows.childNodes[0].style.opacity = 1;
+        } else {
+            arrows.childNodes[0].setAttribute('enabled', false);
+            arrows.childNodes[0].style.opacity = 0.2;
+        }
+
+        if (typeof results[current] !== 'undefined') {
+            arrows.childNodes[2].setAttribute('enabled', true);
+            arrows.childNodes[2].style.opacity = 1;
+        } else {
+            arrows.childNodes[2].setAttribute('enabled', false);
+            arrows.childNodes[2].style.opacity = 0.2;
+        }
+
+        for (var c in pageq[current].childNodes) {
+            var s = pageq[current].childNodes[c]
+            if (typeof s.className !== 'undefined') {
+                s.className = s.className.replace('selected', '');
+            }
+        }
+
+        if (typeof results[current] !== 'undefined') {
+            var s = pageq[current].childNodes[qa[current].A.indexOf(results[current].A) + 1];
+            s.className = s.className + ' selected';
+        }
+
+        if (current === 0) {
+            left.style.opacity = 0;
+        }
+
+        pager.innerText = (current + 1) + ' out of ' + qa.length;
     }, false);
+
+    right.addEventListener('click', function (e) {
+        if (this.getAttribute('enabled') == 'false') {
+            e.preventDefault();
+            e.stopPropagation();
+            return false;
+        }
+
+        // On Submit All
+        if (current === qa.length - 1) {
+            pager.innerText = ''
+            arrows.childNodes[2].setAttribute('enabled', false);
+            arrows.childNodes[2].style.opacity = 0;
+            arrows.childNodes[0].setAttribute('enabled', false);
+            arrows.childNodes[0].style.opacity = 0;
+            end.className = 'thankyou abs';
+
+            for (var i in results) {
+                app.tracker('E', results[i].T, results[i].T, results[i].A);
+            }
+        }
+
+        if (current === qa.length - 2) {
+            arrows.childNodes[2].setAttribute('enabled', true);
+            arrows.childNodes[2].innerText = 'Submit';
+            arrows.childNodes[2].style.right = '0';
+        }
+
+        pageq[current].className = 'questionaire hide' + (qa[current].long && typeof qa[current].long !== 'undefined' ? ' long' : '') + (qa[current].end ? ' end' : '');
+        current += 1;
+
+        if (typeof qa[current] === 'undefined') {
+            return false;
+        }
+
+        pageq[current].className = 'questionaire' + (qa[current].long ? ' long' : '') + (qa[current].end ? ' end' : '');
+
+        setTimeout(function () {
+            pageq[current].style.opacity = 1;
+        }, 1)
+
+        if (typeof results[current - 1] !== 'undefined') {
+            arrows.childNodes[0].setAttribute('enabled', true);
+            arrows.childNodes[0].style.opacity = 1;
+        } else {
+            arrows.childNodes[0].setAttribute('enabled', false);
+            arrows.childNodes[0].style.opacity = 0.2;
+        }
+
+        if (typeof results[current] !== 'undefined') {
+            arrows.childNodes[2].setAttribute('enabled', true);
+            arrows.childNodes[2].style.opacity = 1;
+        } else {
+            arrows.childNodes[2].setAttribute('enabled', false);
+            arrows.childNodes[2].style.opacity = 0.2;
+        }
+
+        for (var c in pageq[current].childNodes) {
+            var s = pageq[current].childNodes[c]
+            if (typeof s.className !== 'undefined') {
+                s.className = s.className.replace('selected', '');
+            }
+        }
+
+        if (typeof results[current] !== 'undefined') {
+            var s = pageq[current].childNodes[qa[current].A.indexOf(results[current].A) + 1];
+            s.className = s.className + ' selected';
+        }
+
+        if (current === 0) {
+            left.style.opacity = 1;
+        }
+
+        pager.innerText = (current + 1) + ' out of ' + qa.length;
+    }, false);
+
+    var getURLParameter = function (name, custom) {
+        return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec((typeof custom !== 'undefined' ? custom : location.search)) || [, ""])[1].replace(/\+/g, '%20')) || null;
+    }
+
+    for (var i in qa) {
+        var q = document.createElement('div');
+        q.className = 'questionaire hide' + (qa[i].long ? ' long' : '') + (qa[i].end ? ' end' : '');
+        q.id = 'question_' + i;
+        q.setAttribute('data-index', i);
+        q.setAttribute('data-tracker_type', qa[i].T);
+        q.setAttribute('data-correct', false);
+        q.innerHTML = '<div class="question q' + i + '">' + qa[i].Q + '</div>';
+
+        var type = qa[i].type;
+
+        for (var a in qa[i].A) {
+            if (type === 'R') {
+                var answer = document.createElement('div');
+                var input = document.createElement('input');
+                var label = document.createElement('label');
+                input.type = 'radio';
+                input.name = 'answertoq' + i;
+                input.id = 'answer' + i + a;
+                input.value = qa[i].A[a];
+                label.setAttribute('for', input.id);
+                label.className = 'label';
+                label.innerText = qa[i].A[a].trim();
+                answer.className = 'answer q' + i + ' a' + a
+                answer.appendChild(input);
+                answer.appendChild(label);
+                q.appendChild(answer);
+            } else if (type === 'C') {
+                var answer = document.createElement('div');
+                var input = document.createElement('input');
+                var label = document.createElement('label');
+                input.type = 'checkbox';
+                input.name = 'answertoq' + i;
+                input.id = 'answer' + i + a;
+                input.value = qa[i].A[a];
+                label.setAttribute('for', input.id);
+                label.className = 'label';
+                label.innerText = qa[i].A[a].trim();
+                answer.className = 'answer checkboxes q' + i + ' a' + a
+                answer.appendChild(input);
+                answer.appendChild(label);
+                q.appendChild(answer);
+            }
+
+            answer.onclick = function (e) {
+                var isCheckbox = false;
+                var isLastQuestion = false;
+                var _this = this;
+
+                if (current === qa.length - 1) {
+                    arrows.childNodes[2].setAttribute('enabled', true);
+                    arrows.childNodes[2].innerText = 'Submit';
+                    arrows.childNodes[2].style.right = '0';
+                }
+
+                if (this.getAttribute('disabled') === 'disabled') {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    return false;
+                }
+
+                this.setAttribute('disabled', 'disabled');
+                if (this.querySelector('input[type="checkbox"]'))
+                    this.querySelector('input[type="checkbox"]').checked = !this.querySelector('input[type="checkbox"]').checked;
+
+                if (this.querySelector('input[type="radio"]'))
+                    this.querySelector('input[type="radio"]').checked = true;
+                // this.parentElement.querySelector('input').check = !this.parentElement.querySelector('input').check; 
+
+                if (current === qa.length - 1) {
+                    isLastQuestion = true;
+                    arrows.childNodes[2].setAttribute('enabled', true);
+                    arrows.childNodes[2].style.opacity = 1;
+                    arrows.childNodes[2].innerText = 'Submit';
+                    arrows.childNodes[2].style.right = '0';
+
+                    if (results.map(function (e) {
+                        return e.Q
+                    }).indexOf(this.parentElement.childNodes[0].innerText) === -1) {
+                        results.push({
+                            'Q': this.parentElement.childNodes[0].innerText,
+                            'A': this.querySelector('label').innerText,
+                            'T': this.parentElement.getAttribute('data-tracker_type')
+                        })
+                    } else {
+                        results[this.parentElement.getAttribute('data-index')] = {
+                            'Q': this.parentElement.childNodes[0].innerText,
+                            'A': this.querySelector('label').innerText,
+                            'T': this.parentElement.getAttribute('data-tracker_type')
+                        }
+                    }
+                }
+
+                if (this.className.indexOf('checkboxes') > -1) {
+                    isCheckbox = true;
+                    arrows.childNodes[2].setAttribute('enabled', true);
+                    arrows.childNodes[2].style.opacity = 0.2;
+                    arrows.childNodes[2].className += ' check';
+
+                    if (this.parentElement.querySelectorAll('[type="checkbox"]:checked').length === 0) {
+                        arrows.childNodes[2].setAttribute('enabled', false);
+                        arrows.childNodes[2].style.opacity = 0.2;
+                    } else {
+                        arrows.childNodes[2].style.opacity = 1;
+                    }
+
+                    var checks = '';
+
+                    var elems = this.parentElement.querySelectorAll('[type="checkbox"]:checked');
+
+                    for (var i in elems) {
+                        if (typeof elems[i].value !== 'undefined') {
+                            checks += elems[i].value + ',';
+                        }
+                    }
+
+                    checks = checks.substring(0, checks.length - 1);
+
+                    if (results.map(function (e) {
+                        return e.Q
+                    }).indexOf(this.parentElement.childNodes[0].innerText) === -1) {
+                        results.push({
+                            'Q': this.parentElement.childNodes[0].innerText,
+                            'A': checks,
+                            'T': this.parentElement.getAttribute('data-tracker_type')
+                        })
+                    } else {
+                        results[this.parentElement.getAttribute('data-index')] = {
+                            'Q': this.parentElement.childNodes[0].innerText,
+                            'A': checks,
+                            'T': this.parentElement.getAttribute('data-tracker_type')
+                        }
+                    }
+                }
+
+                // e.target.className.indexOf('label') === -1 &&
+
+                if (!isCheckbox && !isLastQuestion) {
+                    if (e.target.className.indexOf('selected') > -1 || this.className.indexOf('selected') > -1) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        return false;
+                    }
+
+                    if (results.map(function (e) {
+                        return e.Q
+                    }).indexOf(this.parentElement.childNodes[0].innerText) === -1) {
+                        results.push({
+                            'Q': this.parentElement.childNodes[0].innerText,
+                            'A': this.querySelector('label').innerText,
+                            'T': this.parentElement.getAttribute('data-tracker_type')
+                        })
+                    } else {
+                        results[this.parentElement.getAttribute('data-index')] = {
+                            'Q': this.parentElement.childNodes[0].innerText,
+                            'A': this.querySelector('label').innerText,
+                            'T': this.parentElement.getAttribute('data-tracker_type')
+                        }
+                    }
+
+                    if (typeof results[current] !== 'undefined') {
+                        arrows.childNodes[0].setAttribute('enabled', true);
+                    } else {
+                        arrows.childNodes[0].setAttribute('enabled', false);
+                    }
+
+                    if (typeof results[current + 1] !== 'undefined') {
+                        arrows.childNodes[2].setAttribute('enabled', true);
+                    } else {
+                        arrows.childNodes[2].setAttribute('enabled', false);
+                    }
+
+                    this.parentElement.className = 'questionaire hide' + (qa[current].long ? ' long' : '') + (qa[current].end ? ' end' : '');
+                    current = (current != pageq.length - 1) ? current + 1 : 'end';
+
+                    if (current !== 'end') {
+                        left.style.opacity = 1;
+                        pageq[current].className = 'questionaire' + (qa[current].long ? ' long' : '') + (qa[current].end ? ' end' : '');
+                        setTimeout(function () {
+                            pageq[current].style.opacity = 1;
+                        }, 1)
+                        pager.innerText = (current + 1) + ' out of ' + qa.length;
+                        if (qa[current].type === 'C') {
+                            arrows.childNodes[2].style.opacity = 1;
+                        }
+                        // app.tracker('E', this.parentElement.getAttribute('data-tracker_type'));
+                    } else {
+                        pager.innerText = ''
+                        arrows.childNodes[2].setAttribute('enabled', false);
+                        arrows.childNodes[2].style.opacity = 0;
+                        arrows.childNodes[0].setAttribute('enabled', false);
+                        arrows.childNodes[0].style.opacity = 0;
+                        end.className = 'thankyou abs';
+
+
+                        // app.tracker('E', this.parentElement.getAttribute('data-tracker_type'));
+                    }
+                }
+
+
+                setTimeout(function () {
+                    _this.removeAttribute('disabled');
+                }, 500);
+            };
+
+
+        }
+
+        pageq.push(q);
+        content.appendChild(q);
+
+        if (qa[i].end) {
+            var last = document.createElement('div');
+            last.className = 'answer last';
+            last.innerText = 'Last Question'
+            q.appendChild(last);
+            content.appendChild(end);
+        }
+    }
+
+
+    main.style.background = '#000';
+
+    var onceMain = true;
+
+    //main.addEventListener('click', function() { For Main Click
+    (function () {
+        if (onceMain) {
+            pageq[0].className = 'questionaire';
+            arrows.className = 'arrows abs';
+            arrows.childNodes[0].setAttribute('enabled', false);
+            arrows.childNodes[2].setAttribute('enabled', false);
+            setTimeout(function () {
+                pageq[0].style.opacity = 1;
+                arrows.style.opacity = 1;
+            }, 1)
+            onceMain = false;
+        }
+    })()
+    // }, false); For Main Click
 
     app.loadCss(app.path + 'css/style.css');
+};
 
+var dapp = function () {
+    var app = new mads();
+    var jsonLink = null;
+
+    if (typeof app.custTracker !== 'undefined' && app.custTracker.length === 2) {
+        jsonLink = app.custTracker[1];
+    }
+
+    getJSON(jsonLink || 'https://cdn.rawgit.com/sevensilvers/0ad785494aefcd73cc19671540fc9e24/raw/8d16737b4c1e6f0a07c95fd2ebf96cbf08860b5a/pb.mb-v1.json',
+        function (err, data) {
+            var ad = renderAd(data);
+        });
 } ();
+
+
+
+

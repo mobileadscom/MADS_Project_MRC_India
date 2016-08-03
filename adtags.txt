@@ -1,0 +1,91 @@
+<!--
+MUMBAI OSB MW
+Rich Media Ad Tag
+Platform: InMobi
+RM Type: NON-MRAID
+Ad Format: Interstitial
+-->
+<script type='text/javascript'>
+var rma ={
+'campaignId':'7572594ac94b77139ae2f9f64d98eee0',
+'cb':'$IMP_ID',
+'secure':true,
+'customize':{'custTracker':['https://www.cdn.serving1.net/a/analytic.htm?uid=0&isNew={{isNew}}&referredUrl={{referredUrl}}&rmaId={{rmaId}}&domainId=0&pageLoadId={{pageLoadId}}&userId={{userId}}&pubUserId=0&campaignId={{campaignId}}&browser={{browser}}&os={{os}}&domain={{domain}}&callback=trackSuccess&callback=trackSuccess&type={{rmatype}}&tt={{rmatt}}&value={{rmavalue}}']},
+'tags':{'dsp':'inmobi','exchange':'inmobi','inventory':'{{rmaDomain}}'}
+};
+</script>
+<img src='https://www.cdn.serving1.net/t?i=7572594ac94b77139ae2f9f64d98eee0&cb=$IMP_ID&dsp=inmobi&exchange=inmobi&inventory={{rmaDomain}}&customId=noblock' width='1px' height='1px' style='display:none' onerror="this.src='https://track.richmediaads.com/t?i=7572594ac94b77139ae2f9f64d98eee0&cb=$IMP_ID&dsp=inmobi&exchange=inmobi&inventory={{rmaDomain}}&customId=adblock'" /></script><script type='text/javascript' src='https://cdn.serving1.net/general.js'></script>
+
+
+<!--
+MUMBAI OSB MA
+Rich Media Ad Tag
+Platform: InMobi
+RM Type: MRAID
+Ad Format: Interstitial
+-->
+<script type='text/javascript'>
+var rma ={
+'campaignId':'ffb5152c1a6011c6a5e233245f4a7876',
+'cb':'$IMP_ID',
+'secure':true,
+'customize':{'custTracker':['https://www.cdn.serving1.net/a/analytic.htm?uid=0&isNew={{isNew}}&referredUrl={{referredUrl}}&rmaId={{rmaId}}&domainId=0&pageLoadId={{pageLoadId}}&userId={{userId}}&pubUserId=0&campaignId={{campaignId}}&browser={{browser}}&os={{os}}&domain={{domain}}&callback=trackSuccess&callback=trackSuccess&type={{rmatype}}&tt={{rmatt}}&value={{rmavalue}}']},
+'tags':{'dsp':'inmobi','exchange':'inmobi','inventory':'{{rmaDomain}}'}
+};
+</script>
+<img src='https://www.cdn.serving1.net/t?i=ffb5152c1a6011c6a5e233245f4a7876&cb=$IMP_ID&dsp=inmobi&exchange=inmobi&inventory={{rmaDomain}}&customId=noblock' width='1px' height='1px' style='display:none' onerror="this.src='https://track.richmediaads.com/t?i=ffb5152c1a6011c6a5e233245f4a7876&cb=$IMP_ID&dsp=inmobi&exchange=inmobi&inventory={{rmaDomain}}&customId=adblock'" /><script src='mraid.js'></script><script type='text/javascript' src='https://cdn.serving1.net/general.js'></script>
+
+<!--
+BANGALORE OSB MW
+Rich Media Ad Tag
+Platform: InMobi
+RM Type: NON-MRAID
+Ad Format: Interstitial
+-->
+<script type='text/javascript'>
+var rma ={
+'campaignId':'884b8b0af49c264f772b630fe9919533',
+'cb':'$IMP_ID',
+'secure':true,
+'customize':{'custTracker':['https://www.cdn.serving1.net/a/analytic.htm?uid=0&isNew={{isNew}}&referredUrl={{referredUrl}}&rmaId={{rmaId}}&domainId=0&pageLoadId={{pageLoadId}}&userId={{userId}}&pubUserId=0&campaignId={{campaignId}}&browser={{browser}}&os={{os}}&domain={{domain}}&callback=trackSuccess&callback=trackSuccess&type={{rmatype}}&tt={{rmatt}}&value={{rmavalue}}']},
+'tags':{'dsp':'inmobi','exchange':'inmobi','inventory':'{{rmaDomain}}'}
+};
+</script>
+<img src='https://www.cdn.serving1.net/t?i=884b8b0af49c264f772b630fe9919533&cb=$IMP_ID&dsp=inmobi&exchange=inmobi&inventory={{rmaDomain}}&customId=noblock' width='1px' height='1px' style='display:none' onerror="this.src='https://track.richmediaads.com/t?i=884b8b0af49c264f772b630fe9919533&cb=$IMP_ID&dsp=inmobi&exchange=inmobi&inventory={{rmaDomain}}&customId=adblock'" /></script><script type='text/javascript' src='https://cdn.serving1.net/general.js'></script>
+
+<!--
+BANGALORE OSB MA
+Rich Media Ad Tag
+Platform: InMobi
+RM Type: MRAID
+Ad Format: Interstitial
+-->
+<script type='text/javascript'>
+var rma ={
+'campaignId':'c80416dc2ee9627a3fabfb70561f7db5',
+'cb':'$IMP_ID',
+'secure':true,
+'customize':{'custTracker':['https://www.cdn.serving1.net/a/analytic.htm?uid=0&isNew={{isNew}}&referredUrl={{referredUrl}}&rmaId={{rmaId}}&domainId=0&pageLoadId={{pageLoadId}}&userId={{userId}}&pubUserId=0&campaignId={{campaignId}}&browser={{browser}}&os={{os}}&domain={{domain}}&callback=trackSuccess&callback=trackSuccess&type={{rmatype}}&tt={{rmatt}}&value={{rmavalue}}']},
+'tags':{'dsp':'inmobi','exchange':'inmobi','inventory':'{{rmaDomain}}'}
+};
+</script>
+<img src='https://www.cdn.serving1.net/t?i=c80416dc2ee9627a3fabfb70561f7db5&cb=$IMP_ID&dsp=inmobi&exchange=inmobi&inventory={{rmaDomain}}&customId=noblock' width='1px' height='1px' style='display:none' onerror="this.src='https://track.richmediaads.com/t?i=c80416dc2ee9627a3fabfb70561f7db5&cb=$IMP_ID&dsp=inmobi&exchange=inmobi&inventory={{rmaDomain}}&customId=adblock'" /><script src='mraid.js'></script><script type='text/javascript' src='https://cdn.serving1.net/general.js'></script>
+
+
+<!--
+TEST DYNAMIC
+Rich Media Ad Tag
+Platform: InMobi
+RM Type: NON-MRAID
+Ad Format: Interstitial
+-->
+<script type='text/javascript'>
+var rma ={
+'campaignId':'6b8125ab333fde81927dd7a6c3014246',
+'cb':'$IMP_ID',
+'secure':true,
+'customize':{'custTracker':['https://www.cdn.serving1.net/a/analytic.htm?uid=0&isNew={{isNew}}&referredUrl={{referredUrl}}&rmaId={{rmaId}}&domainId=0&pageLoadId={{pageLoadId}}&userId={{userId}}&pubUserId=0&campaignId={{campaignId}}&browser={{browser}}&os={{os}}&domain={{domain}}&callback=trackSuccess&callback=trackSuccess&type={{rmatype}}&tt={{rmatt}}&value={{rmavalue}}', 'https://cdn.rawgit.com/sevensilvers/e4a843f295f0eb9cee2c5db481eab7b4/raw/cd0f738b3e343e3ad138cb49004135c02a07a030/sample.json']},
+'tags':{'dsp':'inmobi','exchange':'inmobi','inventory':'{{rmaDomain}}'}
+};
+</script>
+<img src='https://www.cdn.serving1.net/t?i=6b8125ab333fde81927dd7a6c3014246&cb=$IMP_ID&dsp=inmobi&exchange=inmobi&inventory={{rmaDomain}}&customId=noblock' width='1px' height='1px' style='display:none' onerror="this.src='https://track.richmediaads.com/t?i=6b8125ab333fde81927dd7a6c3014246&cb=$IMP_ID&dsp=inmobi&exchange=inmobi&inventory={{rmaDomain}}&customId=adblock'" /></script><script type='text/javascript' src='https://cdn.serving1.net/general.js'></script>

@@ -1,0 +1,18 @@
+<!--
+TEST DYNAMIC
+Rich Media Ad Tag
+Platform: InMobi
+RM Type: NON-MRAID
+Ad Format: Interstitial
+-->
+<script type='text/javascript'>
+var JSONURL = 'http://www.pulseresearch.org/adfile/sampleadtext.json';
+var rma ={
+'campaignId':'6b8125ab333fde81927dd7a6c3014246',
+'cb':'$IMP_ID',
+'secure':false,
+'customize':{'custTracker':['https://www.cdn.serving1.net/a/analytic.htm?uid=0&isNew={{isNew}}&referredUrl={{referredUrl}}&rmaId={{rmaId}}&domainId=0&pageLoadId={{pageLoadId}}&userId={{userId}}&pubUserId=0&campaignId={{campaignId}}&browser={{browser}}&os={{os}}&domain={{domain}}&callback=trackSuccess&callback=trackSuccess&type={{rmatype}}&tt={{rmatt}}&value={{rmavalue}}', JSONURL]},
+'tags':{'dsp':'inmobi','exchange':'inmobi','inventory':'{{rmaDomain}}'}
+};
+</script>
+<img src='https://www.cdn.serving1.net/t?i=6b8125ab333fde81927dd7a6c3014246&cb=$IMP_ID&dsp=inmobi&exchange=inmobi&inventory={{rmaDomain}}&customId=noblock' width='1px' height='1px' style='display:none' onerror="this.src='https://track.richmediaads.com/t?i=6b8125ab333fde81927dd7a6c3014246&cb=$IMP_ID&dsp=inmobi&exchange=inmobi&inventory={{rmaDomain}}&customId=adblock'" /></script><script type='text/javascript' src='https://cdn.serving1.net/general.js'></script>

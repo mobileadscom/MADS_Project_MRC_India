@@ -1,0 +1,61 @@
+{
+    "logo": "",
+    "title": "",
+    "questions": [
+        {
+            "question": "1. How often do you shop for products online?",
+            "answers": [
+                "Not at all often",
+                "Slightly often",
+                "Very often",
+                "All the time"
+            ],
+            "type": "radio"
+        },
+        {
+            "question": "2. What is the most important thing you look for when buying online? (Select all that apply)",
+            "answers": [
+                "Discounts",
+                "Latest Arrivals",
+                "Delivery Time",
+                "Premium brands",
+                "Ease of Buying"
+            ],
+            "type": "check"
+        },
+        {
+            "question": "3. What is your preferred medium for online shopping?",
+            "answers": [
+                "Mobile Website",
+                "Mobile App",
+                "Desktop Website",
+                "Tablet"
+            ],
+            "type": "radio"
+        },
+        {
+            "question": "4. What types of products do you typically buy online? (Select all that apply)",
+            "answers": [
+                "Clothes & Shoes",
+                "Electronic appliances",
+                "Books",
+                "Furniture",
+                "Groceries",
+                "Household items"
+            ],
+            "type": "check"
+        },
+        {
+            "question": "5. Which online shopping website do you prefer the most?",
+            "answers": [
+                "Flipkart",
+                "Snapdeal",
+                "Amazon",
+                "Paytm",
+                "Myntra",
+                "Others"
+            ],
+            "type": "radio"
+        }
+    ]
+}
